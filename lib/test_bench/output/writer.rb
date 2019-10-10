@@ -32,6 +32,32 @@ module TestBench
       end
       attr_writer :buffer
 
+      def configure
+        Buffer.configure(self)
+      end
+
+      def self.build(device=nil, styling: nil)
+        device ||= Defaults.device
+
+        instance = new
+        instance.device = device
+        instance.styling_policy = styling
+        instance.configure
+        instance
+      end
+
+      def self.configure(receiver, writer: nil, styling: nil, device: nil, attr_name: nil)
+        attr_name ||= :writer
+
+        if not writer.nil?
+          instance = writer
+        else
+          instance = build(device, styling:)
+        end
+
+        receiver.public_send(:"#{attr_name}=", instance)
+      end
+
       def sync
         @sync.nil? ? @sync = true : @sync
       end
