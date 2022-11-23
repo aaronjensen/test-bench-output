@@ -36,6 +36,20 @@ module TestBench
         @sync.nil? ? @sync = true : @sync
       end
 
+      def style(style, *additional_styles)
+        styles = [style, *additional_styles]
+
+        control_codes = styles.map do |style|
+          Style.control_code(style)
+        end
+
+        if styling?
+          write("\e[#{control_codes.join(';')}m")
+        end
+
+        self
+      end
+
       def print(text)
         text = text.dump[1...-1]
 
