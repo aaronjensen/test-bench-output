@@ -123,7 +123,10 @@ module TestBench
 
         self.sequence += bytes_written
 
-        data = data[0...bytes_written]
+        if bytes_written < data.bytesize
+          data = data[0...bytes_written]
+        end
+
         digest.update(data)
 
         bytes_written
