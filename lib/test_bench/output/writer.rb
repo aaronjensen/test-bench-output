@@ -116,20 +116,16 @@ module TestBench
 
       def write(data)
         if sync
-          bytes_written = write!(data)
+          write!(data)
         else
-          bytes_written = buffer.receive(data)
+          data = buffer.receive(data)
         end
 
-        self.sequence += bytes_written
-
-        if bytes_written < data.bytesize
-          data = data[0...bytes_written]
-        end
+        self.sequence += data.bytesize
 
         digest.update(data)
 
-        bytes_written
+        data.bytesize
       end
 
       def write!(data)

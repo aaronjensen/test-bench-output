@@ -12,8 +12,12 @@ context "Buffer" do
         buffer.limit = limit
 
         bytes_received = 0
-        bytes_received += buffer.receive(data[0...1])
-        bytes_received += buffer.receive(data[1..-1])
+
+        received_data = buffer.receive(data[0...1])
+        bytes_received += received_data.bytesize
+
+        received_data = buffer.receive(data[1..-1])
+        bytes_received += received_data.bytesize
 
         test! do
           assert(bytes_received == limit)
@@ -41,8 +45,12 @@ context "Buffer" do
         buffer.limit = limit
 
         bytes_received = 0
-        bytes_received += buffer.receive(data[0...1])
-        bytes_received += buffer.receive(data[1..-1])
+
+        received_data = buffer.receive(data[0...1])
+        bytes_received += received_data.bytesize
+
+        received_data = buffer.receive(data[1..-1])
+        bytes_received += received_data.bytesize
 
         test! do
           assert(bytes_received == limit)

@@ -37,7 +37,7 @@ module TestBench
 
           contents << data
 
-          bytes
+          data
         end
 
         def limit?
